@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+/* Source Han Serif SC is the same as Noto Serif SC (思源宋体) */
+@font-face {
+  font-family: 'Source Han Serif SC';
+  src: local('Noto Serif SC'), local('Source Han Serif SC'), local('思源宋体');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Huiwen-mincho font - Falls back to system serif fonts if not installed */
+@font-face {
+  font-family: 'Huiwen-mincho';
+  src: local('Huiwen-mincho'), local('汇文明朝体');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* X-OTL Haolong - for "诗" character */
+@font-face {
+  font-family: 'X-OTL Haolong';
+  src: local('X-OTL Haolong'), local('XOTLHaolong');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* HYChengXingJ - for "中" character */
+@font-face {
+  font-family: 'HYChengXingJ';
+  src: local('HYChengXingJ'), local('汉仪程行简');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* FZShuTi - for "之" character */
+@font-face {
+  font-family: 'FZShuTi';
+  src: local('FZShuTi'), local('方正舒体');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* AaTaoHuaShan - for "桥" character */
+@font-face {
+  font-family: 'AaTaoHuaShan';
+  src: local('AaTaoHuaShan'), local('Aa桃花山');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* XiangcuiChaoxisong - for "进入探索" */
+@font-face {
+  font-family: 'XiangcuiChaoxisong';
+  src: local('XiangcuiChaoxisong'), local('祥隶朝夕宋');
+  font-weight: normal;
+  font-style: normal;
+}
