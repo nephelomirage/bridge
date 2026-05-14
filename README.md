@@ -1,8 +1,7 @@
 
-  # Interactive Cultural Website Design
+  # 桥见千年
 
-  This is a code bundle for Interactive Cultural Website Design. The original project is available at https://www.figma.com/design/M0fiJjloRnSWZ8TknNdk3p/Interactive-Cultural-Website-Design.
-
+  This is a code bundle for Bridge — Culture Website Design. 
   ## Running the code
 
   Run `npm i` to install the dependencies.

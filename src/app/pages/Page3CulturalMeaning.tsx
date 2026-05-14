@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import { ArrowLeft, X, ChevronDown } from "lucide-react";
 import { Navigation } from "../components/Navigation";
 import { WordCloud } from "../components/WordCloud";
+import { StreamGraph } from "../components/StreamGraph";
 const wordCloudBg = "/images/wordCloudBg.png";
+const streamGraphBg = "/images/streamgraph-1.png";
 
 interface Point3D {
   x: number;
@@ -186,13 +188,13 @@ const WORD_GROUPS = [
     id: "travel",
     name: "道路行旅",
     words: ["路", "马", "渡", "归", "万里", "山路"],
-    description: `桥的本质功能是通道，“路”、“渡”、“马”共同构成了行旅的叙事场景。骑马而来、涉水而渡、踏桥而过，桥是旅途中短暂的落脚之地，也是漫漫“万里”征程的中途坐标。“归”字尤为深情——桥既是出发的起点，也是归来的门槛，无论是宦游者还是羁旅客，桥头是离家最后的回望，也是还家最先的欣慰。“山路”则把桥嵌入崎岖地形，突显了架桥之艰与过桥之险。`
+    description: `桥的本质功能是通道，“路”“渡”“马”共同构成了行旅的叙事场景。骑马而来、涉水而渡、踏桥而过，桥是旅途中短暂的落脚之地，也是漫漫“万里”征程的中途坐标。“归”字尤为深情——桥既是出发的起点，也是归来的门槛，无论是宦游者还是羁旅客，桥头是离家最后的回望，也是还家最先的欣慰。“山路”则把桥嵌入崎岖地形，突显了架桥之艰与过桥之险。`
   },
   {
     id: "season",
     name: "时令节序",
     words: ["春", "月", "夜", "秋", "春风", "秋风"],
-    description: `桥是时间流逝最好的观测台。春风吹过、秋风乍起，月色倾洒桥面，夜色笼罩桥栏，桥目睹了四时更迭与昼夜轮转。"月""夜"的高频组合尤为典型——夜桥映月，静谧清冷，是唐诗中营造孤寂意境的标志性场景。春与秋的对举，则承载了中国古典诗学中盛衰、荣枯、欢悲的深层情感结构，桥因此成为感受时间之重的精神装置。`
+    description: `桥是时间流逝最好的观测台。春风吹过、秋风乍起，月色倾洒桥面，夜色笼罩桥栏，桥目睹了四时更迭与昼夜轮转。“月”“夜”的高频组合尤为典型——夜桥映月，静谧清冷，是唐诗中营造孤寂意境的标志性场景。春与秋的对举，则承载了中国古典诗学中盛衰、荣枯、欢悲的深层情感结构，桥因此成为感受时间之重的精神装置。`
   },
   {
     id: "urban",
@@ -210,7 +212,7 @@ const WORD_GROUPS = [
     id: "farewell",
     name: "离别与相思",
     words: ["别", "鹊", "鹊桥", "乌鹊"],
-    description: `桥在中国文化中是情感分合的象征核心。“别”字直指送别情境，而“鹊”、“乌鹊”、“鹊桥”的密集出现，则将桥与牛郎织女传说深度绑定。七夕鹊桥是天上的相会之桥，人间的桥由此获得了神话维度——每一座桥都潜藏着跨越阻隔、两情相聚的渴望。别离与团圆在桥上形成永恒的张力：人在桥头挥手而别，神在桥上跨越银河，桥成为人类情感中分离与重逢这一永恒主题的最佳物质载体。`
+    description: `桥在中国文化中是情感分合的象征核心。“别”字直指送别情境，而“鹊”“乌鹊”“鹊桥”的密集出现，则将桥与牛郎织女传说深度绑定。七夕鹊桥是天上的相会之桥，人间的桥由此获得了神话维度——每一座桥都潜藏着跨越阻隔、两情相聚的渴望。别离与团圆在桥上形成永恒的张力：人在桥头挥手而别，神在桥上跨越银河，桥成为人类情感中分离与重逢这一永恒主题的最佳物质载体。`
   }
 ];
 
@@ -255,6 +257,52 @@ const WORD_FREQUENCY_DATA = [
     groupName: group?.name || ""
   };
 });
+
+// Stream graph data
+const STREAM_GRAPH_DATA = [
+  { dynasty: "先秦秦汉", imagery: "行旅交通", count: 35, proportion: 22.01 },
+  { dynasty: "先秦秦汉", imagery: "时令节序", count: 31, proportion: 19.5 },
+  { dynasty: "先秦秦汉", imagery: "自然山水", count: 30, proportion: 18.87 },
+  { dynasty: "先秦秦汉", imagery: "离别与相思", count: 28, proportion: 17.61 },
+  { dynasty: "先秦秦汉", imagery: "草木生灵", count: 18, proportion: 11.32 },
+  { dynasty: "先秦秦汉", imagery: "人居市井", count: 17, proportion: 10.69 },
+  { dynasty: "魏晋南北朝", imagery: "自然山水", count: 109, proportion: 20.07 },
+  { dynasty: "魏晋南北朝", imagery: "时令节序", count: 108, proportion: 19.89 },
+  { dynasty: "魏晋南北朝", imagery: "行旅交通", count: 92, proportion: 16.94 },
+  { dynasty: "魏晋南北朝", imagery: "草木生灵", count: 88, proportion: 16.21 },
+  { dynasty: "魏晋南北朝", imagery: "离别与相思", count: 75, proportion: 13.81 },
+  { dynasty: "魏晋南北朝", imagery: "人居市井", count: 71, proportion: 13.08 },
+  { dynasty: "唐", imagery: "时令节序", count: 993, proportion: 20.6 },
+  { dynasty: "唐", imagery: "自然山水", count: 974, proportion: 20.21 },
+  { dynasty: "唐", imagery: "行旅交通", count: 748, proportion: 15.52 },
+  { dynasty: "唐", imagery: "离别与相思", count: 730, proportion: 15.15 },
+  { dynasty: "唐", imagery: "草木生灵", count: 727, proportion: 15.08 },
+  { dynasty: "唐", imagery: "人居市井", count: 648, proportion: 13.44 },
+  { dynasty: "宋金", imagery: "时令节序", count: 5207, proportion: 21.32 },
+  { dynasty: "宋金", imagery: "自然山水", count: 4885, proportion: 20.0 },
+  { dynasty: "宋金", imagery: "草木生灵", count: 3664, proportion: 15.0 },
+  { dynasty: "宋金", imagery: "行旅交通", count: 3662, proportion: 14.99 },
+  { dynasty: "宋金", imagery: "离别与相思", count: 3635, proportion: 14.88 },
+  { dynasty: "宋金", imagery: "人居市井", count: 3372, proportion: 13.81 },
+  { dynasty: "元", imagery: "时令节序", count: 1887, proportion: 21.04 },
+  { dynasty: "元", imagery: "自然山水", count: 1794, proportion: 20.0 },
+  { dynasty: "元", imagery: "草木生灵", count: 1403, proportion: 15.64 },
+  { dynasty: "元", imagery: "行旅交通", count: 1342, proportion: 14.96 },
+  { dynasty: "元", imagery: "人居市井", count: 1293, proportion: 14.42 },
+  { dynasty: "元", imagery: "离别与相思", count: 1249, proportion: 13.93 },
+  { dynasty: "明", imagery: "时令节序", count: 8164, proportion: 21.15 },
+  { dynasty: "明", imagery: "自然山水", count: 7667, proportion: 19.86 },
+  { dynasty: "明", imagery: "草木生灵", count: 5958, proportion: 15.44 },
+  { dynasty: "明", imagery: "行旅交通", count: 5767, proportion: 14.94 },
+  { dynasty: "明", imagery: "离别与相思", count: 5642, proportion: 14.62 },
+  { dynasty: "明", imagery: "人居市井", count: 5402, proportion: 13.99 },
+  { dynasty: "清", imagery: "时令节序", count: 8154, proportion: 20.67 },
+  { dynasty: "清", imagery: "自然山水", count: 7825, proportion: 19.83 },
+  { dynasty: "清", imagery: "草木生灵", count: 6283, proportion: 15.92 },
+  { dynasty: "清", imagery: "离别与相思", count: 5909, proportion: 14.98 },
+  { dynasty: "清", imagery: "行旅交通", count: 5699, proportion: 14.44 },
+  { dynasty: "清", imagery: "人居市井", count: 5587, proportion: 14.16 },
+];
 
 export function Page3CulturalMeaning() {
   const navigate = useNavigate();
@@ -786,6 +834,104 @@ export function Page3CulturalMeaning() {
         <div className="relative z-10 h-[calc(100vh-240px)] px-4">
           <WordCloud words={WORD_FREQUENCY_DATA} groups={WORD_GROUPS} />
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="relative z-10 pb-8 flex flex-col items-center gap-2 cursor-pointer"
+          initial={{ opacity: 0, y: -10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, repeat: Infinity, repeatType: "reverse" }}
+          viewport={{ once: false }}
+          onClick={() => {
+            const element = document.getElementById("stream-graph-section");
+            element?.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
+          <span
+            className="text-sm tracking-widest text-white/70"
+            style={{ fontFamily: "'Noto Sans SC', sans-serif" }}
+          >
+            查看意象流变
+          </span>
+          <ChevronDown className="h-6 w-6 text-white/70" />
+        </motion.div>
+      </div>
+
+      {/* Section 3: Stream Graph */}
+      <div
+        id="stream-graph-section"
+        className="relative min-h-screen snap-start bg-cover bg-top bg-no-repeat flex flex-col items-center justify-start py-3 overflow-visible"
+        style={{
+          backgroundImage: `url(${streamGraphBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'top center',
+          paddingBottom: '5rem'
+        }}
+      >
+        {/* Subtle overlay matching the new background's top darkening */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/5" />
+
+        {/* Title */}
+        <motion.div
+          className="relative z-10 pt-12 pb-6 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2
+            className="text-7xl font-bold tracking-widest text-white mb-4"
+            style={{
+              fontFamily: "'Huiwen-mincho', 'Noto Serif SC', serif",
+              textShadow: "0 0 40px rgba(251, 191, 36, 0.8), 0 0 80px rgba(251, 191, 36, 0.4)",
+            }}
+          >
+            桥的意象流变
+          </h2>
+          <p
+            className="text-lg tracking-wide text-white/80"
+            style={{ fontFamily: "'Noto Sans SC', sans-serif" }}
+          >
+            中国古代诗歌中桥意象的朝代演变
+          </p>
+        </motion.div>
+
+        {/* Stream Graph - much larger and wider, moved up */}
+        <motion.div
+          className="relative z-10 w-[98%] px-2"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          style={{ overflow: 'visible', marginTop: '-40px' }}
+        >
+          <StreamGraph data={STREAM_GRAPH_DATA} />
+        </motion.div>
+
+        {/* Description - updated content */}
+        <motion.div
+          className="relative z-10 mt-6 max-w-5xl px-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          <div className="rounded-2xl border border-white/30 bg-white/10 backdrop-blur-xl p-8 transition-all duration-300 hover:bg-white/15" style={{ boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)' }}>
+            <div
+              className="text-lg leading-loose space-y-4"
+              style={{ fontFamily: "'Source Han Serif SC', 'Noto Serif SC', serif", color: '#1a4d4d' }}
+            >
+              <p className="text-center">
+                先秦到魏晋，桥是空间的跨越——行旅交通占比最高，桥连接的是远方与故乡，是险阻与通途。<br />
+                唐宋以后，桥逐渐成为时间的容器——时令节序跃居首位，桥承载的是朝暮与四季，是流逝与重逢。
+              </p>
+              <p className="text-center mt-6">
+                而草木生灵与人居市井的稳步上升，则表明桥进一步下沉为日常的风景——桥不再是旅途中的特殊节点，而是生活里随处可见的陪伴。<br />
+                桥的诗意，从“走出去”变成“停下来”，从远方的象征变为日常的诗学。千年之间，桥没有变，变的是我们看桥的眼睛。
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* Detail modal for 3D nodes */}
